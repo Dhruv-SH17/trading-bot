@@ -1,0 +1,20 @@
+#all the tickers that we track
+
+universe:
+  - XLK
+  - XLF
+  - XLE
+  - XLV
+  - XLI
+  - XLY
+  - XLP
+  - XLU
+  - XLB
+  
+benchmark: SPY
+
+data:
+  #year-month-date
+  start: "2021-12-30"
+  #null for up to today
+  end: null
