@@ -1,12 +1,9 @@
 from datetime import datetime
-from pathlib import Path
+from paths import CONFIG_PATH
 import yaml
 
 
-project_root = Path(__file__).resolve().parent.parent
-config_path = project_root / "config.yaml"
-
-def load_config(path = config_path) -> dict:
+def load_config(path = CONFIG_PATH) -> dict:
     with open(path) as f:
         cfg = yaml.safe_load(f)
         symbols = [s.strip().upper() for s in cfg['universe']]
