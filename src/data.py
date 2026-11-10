@@ -3,20 +3,24 @@ import pandas as pd
 from features import calculate_daily_returns
 from alpaca.data import StockHistoricalDataClient
 from alpaca.data.requests import StockBarsRequest
-from alpaca.data.timeframe import TimeFrame, TimeFrameUnit
+from alpaca.data.timeframe import TimeFrame
 from alpaca.data.enums import Adjustment
 from alpaca.data.models import BarSet
 from datetime import datetime, timedelta, timezone
 import matplotlib.pyplot as plt
 from typing import Literal
 from pathlib import Path
-#import numpy
+from paths import CACHE_DIR
+import logging
 
 
 
 from dotenv import load_dotenv
 
 load_dotenv()
+
+
+logger = logging.getLogger(__name__)
 
 api_key = os.getenv("ALPACA_API_KEY")
 api_secret = os.getenv("ALPACA_SECRET_KEY")
@@ -31,8 +35,14 @@ OVERLAP = timedelta(days=7)   # re-fetch the last week to catch provider correct
 
 stock_client = StockHistoricalDataClient(api_key, api_secret)
 
-def get_bars(symbols: list[str], start: datetime, end: datetime | None = None, refresh = False) -> pd.DataFrame:
+def get_bars(symbols: list[str], 
+             start: datetime, 
+             end: datetime | None = None, 
+             refresh: bool = False, 
+             update: bool = True) -> pd.DataFrame:
     """Daily OHLCV bars for all symbols, indexed by (symbol, date). if end=None then it loads up to the latest data."""
+
+    #if update is false, the function resorts to using cached data for symbols that are already cached ()
 
     frames = []
 
@@ -40,11 +50,18 @@ def get_bars(symbols: list[str], start: datetime, end: datetime | None = None, r
         
         cached = None if refresh else _read_cache(symbol)
 
-        if cached is None:
+        if cached is None or _first_date(cached) > start + OVERLAP:
+            logger.info("%s: full download", symbol)
             bars = _fetch_bars([symbol], start, end)
+
+        elif not update:
+            logger.info("%s using cached data only", symbol)
+            frames.append(cached)
+            continue
         
         else:
-            new_data = _fetch_bars([symbol], _last_date(cached), end)
+            logger.debug("%s: accessing cache, fetching recent days", symbol)
+            new_data = _fetch_bars([symbol], _last_date(cached) - OVERLAP, end)
             bars = _merge(cached, new_data)
 
         _validate(bars, symbol) 
@@ -134,9 +151,6 @@ def _fetch_bars(symbols: list[str], start: datetime, end: datetime | None) -> pd
     
     return bars_df
 
-
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-CACHE_DIR = PROJECT_ROOT/'data'
 
 def _cache_path (symbol: str) -> Path:
 

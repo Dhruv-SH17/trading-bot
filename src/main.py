@@ -1,6 +1,17 @@
 from config import load_config
 from data import get_bars, field_table, symbol_bars, data_report
 from features import calculate_daily_returns
+from paths import LOG_DIR
+import logging
+import time
+
+
+logging.basicConfig(level=logging.INFO, 
+                    format="%(asctime)s %(levelname)s %(message)s",
+                    handlers=[
+                        logging.StreamHandler(),
+                        #logging.FileHandler(LOG_DIR/"bot.log", encoding="utf-8") for future live bot logging
+                    ])
 
 cfg = load_config()
 
