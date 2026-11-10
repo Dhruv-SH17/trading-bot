@@ -7,7 +7,7 @@ from alpaca.data.timeframe import TimeFrame
 from alpaca.data.enums import Adjustment
 from alpaca.data.models import BarSet
 from datetime import datetime, timedelta, timezone
-import matplotlib.pyplot as plt
+from market_data import field_table
 from typing import Literal
 from pathlib import Path
 from paths import CACHE_DIR
@@ -90,26 +90,9 @@ def data_report(bars: pd.DataFrame) -> pd.DataFrame:
     })
 
 
-BarField = Literal["open", "high", "low", "close", "volume", "vwap", "trade_count"]
 
 
-def field_table (bars: pd.DataFrame, name: BarField) -> pd.DataFrame:
 
-    return bars[name].unstack(level='symbol')
-
-
-def symbol_bars (bars: pd.DataFrame, symbol: str) -> pd.DataFrame:
-
-    available = bars.index.unique(level='symbol')
-
-    if symbol not in available:
-        raise KeyError(f"{symbol} is not in the loaded data. Available: {sorted(available)}")
-
-    table = bars.xs(symbol, level="symbol")
-    if not isinstance(table, pd.DataFrame):
-        raise TypeError(f"Expected a DataFrame for {symbol}, got {type(table).__name__}")
-    
-    return table 
 
 #helper functions
 
