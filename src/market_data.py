@@ -10,7 +10,7 @@ class MarketData:
     high: pd.DataFrame
     low: pd.DataFrame
     close: pd.DataFrame
-    volume: pd.DataFrame    
+    volume: pd.DataFrame
 
     @classmethod
     def from_bars(cls, bars: pd.DataFrame) -> Self:

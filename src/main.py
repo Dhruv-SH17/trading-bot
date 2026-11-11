@@ -4,6 +4,8 @@ from data import get_bars, data_report
 from paths import LOG_DIR
 import logging
 import time
+from strategies.buy_and_hold import BuyAndHold
+from strategies.base import MarketData
 
 
 logging.basicConfig(level=logging.INFO, 
@@ -15,11 +17,20 @@ logging.basicConfig(level=logging.INFO,
 
 cfg = load_config()
 
-symbols = cfg['universe'] + [cfg['benchmark']]
+#symbols = cfg['universe'] + [cfg['benchmark']]
 
-bars = get_bars(symbols, cfg['data']['start'], cfg['data']['end'])
 
-report = data_report(bars)
+universe_symbols = cfg['universe']
+benchmark_symbol = cfg['benchmark']
 
-print(report.loc['XLK'])
+bars = get_bars(universe_symbols, cfg['data']['start'], cfg['data']['end'])
 
+data = MarketData.from_bars(bars)
+
+temp_strat = BuyAndHold().weights(data)
+
+#report = data_report(bars)
+
+#print(report.loc['XLK'])
+
+print(temp_strat)

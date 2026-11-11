@@ -7,11 +7,12 @@ class BuyAndHold:
 
     name = "buy_and_hold"
 
-    def target_weights(self, data: MarketData, current: pd.Series) -> pd.Series:
-
-        if current.sum() > 0:
-            return current  # means we are already invested
+    def weights(self, data: MarketData) -> pd.DataFrame:
 
         symbols = data.close.columns
 
-        return pd.Series(1/len(symbols), index=symbols) # gives roughly a ~ 0.111 weight to each ticker (since the unvierse has 9 stocks currently.)
+        first_date = data.close.index[0]
+
+        # Generates a dataframe with exactly one row with the first date as the index.
+        # gives roughly a ~ 0.111 weight to each ticker (since the unvierse has 9 stocks currently.)
+        return pd.DataFrame(1/len(symbols), index=[first_date], columns=symbols) 

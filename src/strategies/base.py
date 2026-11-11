@@ -14,13 +14,14 @@ class Strategy(Protocol):
     """
     name: str
 
-    def target_weights(self, data: MarketData, current: pd.Series) -> pd.Series:
+    def weights(self, data: MarketData) -> pd.DataFrame:
         """
-        Return the target weight for each symbol. data: market data up to and including today.
-        current: the current target weights for each symbol in the portfolio (0 if not held).
-        Returning 'current' unchanged means: make no trades.
-        """
-        target = pd.Series([])
-        
+        Returns a dataframe with all the trades that the strategy wants to execute for each day. 
 
-        return target
+        Rows: Decision dates (must be trading days in the data), Dates left out mean to hold for that day
+        Columns: Same as the symbols in the data
+        Values: >= 0. The entire row can add up to 1 at most; Leftover is cash.
+        A row may be completely NaN meaning hold
+        """
+
+        return pd.DataFrame()
