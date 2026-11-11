@@ -2,14 +2,14 @@
 
 universe:
   - XLK
-  - XLF
-  - XLE
-  - XLV
-  - XLI
-  - XLY
-  - XLP
-  - XLU
-  - XLB
+  # - XLF
+  # - XLE
+  # - XLV
+  # - XLI
+  # - XLY
+  # - XLP
+  # - XLU
+  # - XLB
   
 benchmark: SPY
 
@@ -18,3 +18,10 @@ data:
   start: "2021-12-30"
   #null for up to today
   end: null
+
+backtest:
+  initial_cash: 10000
+  cash_buffer: 0.02 # weight of the total portfolio value kept in cash
+  costs:
+    slippage: 0.0005 #0.05% of price per trade
+    commission: 0.0 # dollars per trade (Alpaca's api has no commission on stock trades)

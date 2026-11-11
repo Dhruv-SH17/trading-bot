@@ -16,7 +16,7 @@ class Strategy(Protocol):
 
     def weights(self, data: MarketData) -> pd.DataFrame:
         """
-        Returns a dataframe with all the trades that the strategy wants to execute for each day. 
+        Returns a dataframe with all the trades that the strategy wants to execute. 
 
         Rows: Decision dates (must be trading days in the data), Dates left out mean to hold for that day
         Columns: Same as the symbols in the data

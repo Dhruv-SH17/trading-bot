@@ -14,8 +14,8 @@ live results with the backtest.
 **Status:** in progress: data pipeline done; strategies and backtester next.
 
 - [x] Data pipeline: Alpaca download, Parquet cache, validation, data-quality report
-- [ ] Strategies: shared interface, buy-and-hold benchmark, trend, mean-reversion and momentum strategies
-- [ ] Backtester: daily simulation with commissions, slippage and position sizing
+- [] Strategies: shared interface, buy-and-hold benchmark, trend, mean-reversion and momentum strategies
+- [x] Backtester: daily simulation with commissions, slippage and position sizing
 - [ ] Evaluation: Sharpe ratio, drawdown, walk-forward testing, parameter sensitivity
 - [ ] Live bot: scheduled paper trading on Alpaca with risk limits and a kill switch
 - [ ] Monitoring: dashboard comparing live results with the backtest

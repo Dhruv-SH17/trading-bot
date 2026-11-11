@@ -16,6 +16,8 @@ def load_config(path = CONFIG_PATH) -> dict:
         cfg['universe'] = symbols
         cfg['benchmark'] = cfg['benchmark'].strip().upper()
 
+        cfg['backtest'] = cfg['backtest']
+
         cfg['data']['start'] = datetime.fromisoformat(cfg['data']['start'])
         if cfg['data']['end'] is not None:
              cfg['data']['end'] = datetime.fromisoformat(cfg['data']['end'])
