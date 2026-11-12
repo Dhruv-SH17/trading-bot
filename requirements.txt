@@ -9,3 +9,6 @@ PyYAML==6.0.3
 
 # Charts
 matplotlib==3.11.2
+
+# Tests
+pytest==9.2.0
