@@ -2,14 +2,14 @@
 
 universe:
   - XLK
-  # - XLF
-  # - XLE
-  # - XLV
-  # - XLI
-  # - XLY
-  # - XLP
-  # - XLU
-  # - XLB
+  - XLF
+  - XLE
+  - XLV
+  - XLI
+  - XLY
+  - XLP
+  - XLU
+  - XLB
   
 benchmark: SPY
 

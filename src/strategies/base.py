@@ -12,7 +12,10 @@ class Strategy(Protocol):
     To protect against the portfolio going into a negative balance, 2% of the total portfolio value will be reserved for such situations.
     High, low and volume values are not look ahead.    
     """
-    name: str
+    @property
+    def name(self) -> str:
+        """A label identifying the strategy and it's settings."""
+        ...
 
     def weights(self, data: MarketData) -> pd.DataFrame:
         """

@@ -160,19 +160,10 @@ def _validate_weights(weights: pd.DataFrame, symbols: pd.Index, dates: pd.Dateti
     if len(non_trading_day):
         raise ValueError(f"Weights contain dates with no market data. First example: {non_trading_day[0]}")
 
-    nan_count = weights.isna().sum(axis=1)
-    # checks how many NaN values there are per row
-    partial = (nan_count > 0) & (nan_count < len(weights.columns))
-    # checks whether any of the rows are partially NaNs (which would be an error because either the row can ALL be NaN's or ALL be weights)
-    if partial.any():
-        raise ValueError(f"Rows must be all weights or all NaN's. {partial[partial].index[0]}")
-
-    decided = weights[nan_count == 0]
-    # this is a series of rows that is a decision. So this is filtering out any rows with NaN's (hold)
-    if (decided < 0).any().any():
+    if (weights < 0).any().any():
         raise ValueError("Weights must be non-negative")
 
-    over = decided.sum(axis=1) > 1 + WEIGHT_TOLERANCE
+    over = weights.sum(axis=1) > 1 + WEIGHT_TOLERANCE
     # this checks if any row's weights add up to be MORE than 1 + the weight tolerance.
     if over.any():
         raise ValueError(f"Weights add up to be more than 1. at {over[over].index[0]}")
@@ -192,7 +183,10 @@ def _target_shares(
 
     investable = portfolio.value(close_prices) * (1 - cash_buffer)
 
-    return (target_weights * investable / close_prices).fillna(0.0)
+    # replaces all NaN values with existing number of shares for that symbol already held. 
+    # so this system, instead of setting all NaN values to 0, it sets NaN values to be the same amount of shares already held
+    # for that symbol. 
+    return (target_weights * investable / close_prices).fillna(portfolio.shares)
 
 def _execute(
     portfolio: Portfolio,

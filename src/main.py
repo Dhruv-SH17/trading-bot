@@ -5,6 +5,7 @@ from paths import LOG_DIR
 import logging
 from backtester import run_backtest, CostModel
 from strategies.buy_and_hold import BuyAndHold
+from strategies.moving_average_crossover import MovingAverageCrossover
 from market_data import MarketData
 import matplotlib.pyplot as plt
 
@@ -28,9 +29,10 @@ universe_bars = get_bars(universe_symbols, cfg['data']['start'], cfg['data']['en
 
 data = MarketData.from_bars(universe_bars)
 
-strategy = BuyAndHold()
+buyhold_strategy = BuyAndHold()
+ma_strategy = MovingAverageCrossover()._signals(data)
+weights = buyhold_strategy.weights(data)
 
-weights = strategy.weights(data)
 
 backtest_cfg = cfg['backtest']
 
@@ -55,6 +57,6 @@ result = run_backtest(
 
 # print(field_table(universe_bars, 'open'))
 
-result.equity.plot(title=f"{strategy.name}: portfolio value")
+result.equity.plot(title=f"{buyhold_strategy.name}: portfolio value")
 plt.show()
 
