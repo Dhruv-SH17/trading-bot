@@ -31,7 +31,7 @@ It returns a valid TimeFrame at runtime. (alpaca-py 0.45.0)
 """
 
 DAILY: TimeFrame = TimeFrame.Day # pyright: ignore
-OVERLAP = timedelta(days=7)   # re-fetch the last week to catch provider corrections
+OVERLAP = timedelta(days=3)   # re-fetch the last week to catch provider corrections
 
 stock_client = StockHistoricalDataClient(api_key, api_secret)
 
@@ -51,7 +51,10 @@ def get_bars(symbols: list[str],
         cached = None if refresh else _read_cache(symbol)
 
         if cached is None or _first_date(cached) > start + OVERLAP:
-            logger.info("%s: full download", symbol)
+            if cached is None:
+                logger.info("%s: full download", symbol)
+            else:
+                logger.info("%s: fetching latest Overlap to correct data", symbol)
             bars = _fetch_bars([symbol], start, end)
 
         elif not update:
@@ -60,7 +63,7 @@ def get_bars(symbols: list[str],
             continue
         
         else:
-            logger.debug("%s: accessing cache, fetching recent days", symbol)
+            logger.info("%s: accessing cache, fetching recent days", symbol)
             new_data = _fetch_bars([symbol], _last_date(cached) - OVERLAP, end)
             bars = _merge(cached, new_data)
 

@@ -131,7 +131,7 @@ def run_backtest(
 
         # store today's decision to execute tomorrow
         row = decisions.iloc[i]
-        if row.notna().all():
+        if row.notna().any():
             pending = _target_shares(portfolio, row, close_prices, cash_buffer)
 
     if pending is not None:
