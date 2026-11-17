@@ -18,3 +18,4 @@ def test_holdings_buy_stop_cooldown_reentry_sell():
 
     pd.testing.assert_series_equal(result, expected)
     assert list(result) == [False, True, True, True, True, False, False, True, True, False]
+
