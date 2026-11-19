@@ -18,3 +18,7 @@ Thumbs.db
 
 # Log files
 logs/
+trade-logs/
+
+# CPP Build Files
+build/

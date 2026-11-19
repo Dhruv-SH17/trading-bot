@@ -2,7 +2,7 @@ import math
 import pandas as pd
 import pytest
 
-from features import calculate_daily_returns
+from indicators import calculate_daily_returns
 
 
 def test_calculate_daily_returns_match_hand_calc():
