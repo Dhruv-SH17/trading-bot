@@ -3,7 +3,7 @@ import math
 import pandas as pd
 import pytest
 
-from indicators import calculate_sharpe_ratio
+from metrics import calculate_sharpe_ratio
 
 
 def make_equity(values: list[float]) -> pd.Series:

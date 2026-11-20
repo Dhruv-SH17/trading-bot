@@ -11,11 +11,14 @@ deployed as a scheduled bot that places daily orders on an Alpaca
 paper-trading account, with risk limits, logging and a dashboard comparing
 live results with the backtest.
 
-**Status:** in progress: Backtester done; Basic strategies are next.
+**Status:** in progress: Indicators done; Basic strategies are next.
 
 - [x] Data pipeline: Alpaca download, Parquet cache, validation, data-quality report
-- [ ] Strategies: shared interface, buy-and-hold benchmark, trend, mean-reversion and momentum strategies
 - [x] Backtester: daily simulation with commissions, slippage and position sizing
+- [ ] Strategies: shared interface, buy-and-hold benchmark, trend, mean-reversion and momentum strategies
+- [x] Metrics: total return, CAGR, max drawdown, annualized volatility, Sharpe and Sortino ratios
+- [x] Indicators: SMA, daily and trailing returns, rolling volatility
+- [ ] Plots: equity curves vs. benchmark, drawdowns and a metrics table for any set of strategies, plus price charts with trade markers for debugging.
 - [ ] Backtester in C++: For heavy simulations across different strategies and time horizons
 - [ ] Evaluation: Sharpe ratio, drawdown, walk-forward testing, parameter sensitivity
 - [ ] Live bot: scheduled paper trading on Alpaca with risk limits and a kill switch
