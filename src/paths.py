@@ -6,3 +6,5 @@ CACHE_DIR = PROJECT_ROOT/'data'
 CONFIG_PATH = PROJECT_ROOT/'config.yaml'
 
 LOG_DIR = PROJECT_ROOT/'logs'
+
+TRADE_LOG_DIR = PROJECT_ROOT/'trade-logs'
