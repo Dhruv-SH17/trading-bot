@@ -20,7 +20,7 @@ live results with the backtest.
 - [x] Indicators: SMA, daily and trailing returns, rolling volatility
 - [ ] Plots: equity curves vs. benchmark, drawdowns and a metrics table for any set of strategies, plus price charts with trade markers for debugging.
 - [ ] Backtester in C++: For heavy simulations across different strategies and time horizons
-- [ ] Evaluation: Sharpe ratio, drawdown, walk-forward testing, parameter sensitivity
+- [ ] Evaluation: walk-forward testing, parameter sensitivity
 - [ ] Live bot: scheduled paper trading on Alpaca with risk limits and a kill switch
 - [ ] Monitoring: dashboard comparing live results with the backtest
 - [ ] Write-up: results, limitations and lessons learned
